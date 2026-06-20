@@ -28,7 +28,7 @@ export default function Navbar({ user }) {
               <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                 <Heart className="w-5 h-5 text-white" />
               </div>
-              <span className="text-2xl font-bold text-gray-900">CarePulse</span>
+              <span className="text-2xl font-bold text-gray-900">HealthCare</span>
             </Link>
           </div>
 
