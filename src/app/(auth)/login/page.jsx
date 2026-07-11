@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Lock, Heart } from 'lucide-react';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -97,19 +98,26 @@ export default function LoginPage() {
               </motion.button>
 
               {/* Create Account */}
-              <button
-                type="button"
-                className="w-full border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900 py-4 rounded-2xl font-medium transition-all"
-              >
-                Create New Account
-              </button>
+              <Link href='/register'>
+                <button
+                  type="button"
+                  className="w-full border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900 py-4 rounded-2xl font-medium transition-all"
+                >
+                  Create New Account
+                </button>
+              </Link>
             </form>
 
             {/* Social Login */}
             <div className="mt-8">
-              <div className="relative text-center my-6">
-                <span className="bg-white dark:bg-slate-950 px-4 text-sm text-slate-500">Or continue with</span>
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-slate-200 dark:bg-slate-800"></div>
+              <div className="relative flex items-center justify-center my-8">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
+                </div>
+
+                <span className="relative z-10 !bg-white dark:!bg-slate-950 px-4 text-sm text-slate-500">
+                  Or continue with
+                </span>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -120,12 +128,14 @@ export default function LoginPage() {
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 py-3.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all"
                   >
-                    {/* আইকন যোগ করতে পারবে */}
                     <span className="text-sm font-medium">{provider}</span>
                   </motion.button>
                 ))}
               </div>
             </div>
+
+
+
           </motion.div>
         </div>
       </div>
@@ -133,7 +143,7 @@ export default function LoginPage() {
       {/* Right Side - Illustration */}
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(at_center,#ffffff15_1px,transparent_1px)] [background-size:40px_40px]"></div>
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -152,14 +162,14 @@ export default function LoginPage() {
           </div>
 
           {/* Floating Icons */}
-          <motion.div 
+          <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ repeat: Infinity, duration: 3 }}
             className="absolute -top-10 -right-10 bg-white p-4 rounded-2xl shadow-xl"
           >
             ❤️
           </motion.div>
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 20, 0] }}
             transition={{ repeat: Infinity, duration: 4, delay: 1 }}
             className="absolute bottom-20 -left-8 bg-white p-4 rounded-2xl shadow-xl text-2xl"

@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, User, Mail, Phone, Lock, Heart } from 'lucide-react';
+import { Eye, EyeOff, User, Mail, Phone, Lock, Heart, Upload, X } from 'lucide-react';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -14,6 +15,7 @@ export default function RegisterPage() {
     phone: '',
     password: '',
     confirmPassword: '',
+    profileImage: null,
   });
 
   const handleChange = (e) => {
@@ -23,6 +25,25 @@ export default function RegisterPage() {
     });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, profileImage: file });
+      
+      // Preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setPreviewImage(null);
+    setFormData({ ...formData, profileImage: null });
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -30,7 +51,7 @@ export default function RegisterPage() {
       return;
     }
     console.log('Register attempt:', formData);
-    // তোমার রেজিস্ট্রেশন লজিক এখানে যোগ করবে
+    // Backend-এ পাঠানোর জন্য formData ব্যবহার করবে
   };
 
   return (
@@ -38,7 +59,7 @@ export default function RegisterPage() {
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-white dark:bg-slate-950 p-8">
         <div className="w-full max-w-md">
-          {/* Logo & Brand */}
+          {/* Logo */}
           <div className="flex items-center gap-3 mb-10">
             <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center">
               <Heart className="w-7 h-7 text-white" />
@@ -62,6 +83,51 @@ export default function RegisterPage() {
             </p>
 
             <form onSubmit={handleRegister} className="space-y-5">
+              {/* Profile Picture */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+                  Profile Picture 
+                </label>
+                
+                <div className="flex items-center gap-4">
+                  {/* Preview */}
+                  <div className="w-24 h-24 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center overflow-hidden relative">
+                    {previewImage ? (
+                      <>
+                        <img 
+                          src={previewImage} 
+                          alt="Preview" 
+                          className="w-full h-full object-cover" 
+                        />
+                        <button
+                          type="button"
+                          onClick={removeImage}
+                          className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                        >
+                          <X size={14} />
+                        </button>
+                      </>
+                    ) : (
+                      <Upload className="w-8 h-8 text-slate-400" />
+                    )}
+                  </div>
+
+                  <label className="cursor-pointer">
+                    <div className="border border-slate-300 dark:border-slate-700 hover:border-primary px-6 py-3 rounded-2xl text-sm font-medium transition-colors">
+                      Upload Photo
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                <p className="text-xs text-slate-500 mt-2">JPG, PNG or JPEG (Max 2MB)</p>
+              </div>
+
+              {/* Other Fields */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Full Name
@@ -98,23 +164,7 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                  Phone Number
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full pl-12 pr-4 py-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl focus:outline-none focus:border-primary transition-colors"
-                    placeholder="+880 1XXX-XXXXXX"
-                    required
-                  />
-                </div>
-              </div>
+            
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
@@ -170,7 +220,7 @@ export default function RegisterPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl font-semibold text-lg transition-all duration-200 mt-4"
+                className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-2xl font-semibold text-lg transition-all duration-200 mt-6"
               >
                 Create Account
               </motion.button>
@@ -204,7 +254,6 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          {/* Floating Icons */}
           <div className="flex justify-center gap-8 text-4xl">
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 2.5 }}>❤️</motion.div>
             <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}>💊</motion.div>
