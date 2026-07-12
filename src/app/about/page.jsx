@@ -16,7 +16,7 @@ export default function AboutUsSection() {
     <section className="py-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-6">
         {/* Mission Statement */}
-        <div className="bg-emerald-900 text-white rounded-3xl p-12 md:p-16 text-center mb-16">
+        <div className="bg-slate-950 text-white rounded-3xl p-12 md:p-16 text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
