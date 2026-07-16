@@ -62,7 +62,7 @@ export default function HeroBanner() {
               </Link>
 
               <Link
-                href="/online-consult"
+                href="#"
                 className="border border-gray-300 hover:bg-white bg-white px-8 py-4 rounded-2xl font-medium text-lg transition-all flex items-center gap-3"
               >
                 <Video className="w-5 h-5" />
