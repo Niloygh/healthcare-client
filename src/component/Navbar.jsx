@@ -12,6 +12,7 @@ export default function Navbar() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
   const user = authClient.useSession().data?.user;
+  // console.log('Session data:', user);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -107,7 +108,7 @@ export default function Navbar() {
                   </div>
 
                   <Link
-                    href="/profile"
+                    href={`/dashboard/${user?.role}/profile`}
                     className="px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 transition-colors"
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -115,7 +116,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/dashboard"
+                    href={`/dashboard/${user?.role}/dashboard`}
                     className="px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 transition-colors"
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -172,12 +173,12 @@ export default function Navbar() {
                     <Button color="primary" className="rounded-xl w-full">
                       Join Free
                     </Button>
-                  </Link>
+                  </Link>rd
                 </div>
               ) : (
                 <div className="space-y-2">
                   <Link
-                    href="/profile"
+                    href={`/dashboard/${user?.role}/profile`}
                     className="flex items-center gap-3 px-4 py-3 text-base font-medium text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

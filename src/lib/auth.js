@@ -15,4 +15,28 @@ export const auth = betterAuth({
         // Optional: if you don't provide a client, database transactions won't be enabled.
         client
     }),
+
+    user: {
+        additionalFields: {
+            role: {
+                defaultValue: 'patient',
+            },
+            gender: {
+                type: "string",
+                input: true,
+            },
+            profileImage: {
+                type: "string",
+                input: true,
+            },
+            clinicRole:{
+                type: "string",
+                input: true,
+            },
+            verified: {
+                type: "string",
+                input: true,
+            }
+        }
+    }
 });

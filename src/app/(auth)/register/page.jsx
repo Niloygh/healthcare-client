@@ -22,9 +22,9 @@ export default function RegisterPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    clinicRole: 'Patient Client',
+    role: 'patient',
     gender: 'Male',
-    profileImage: null,
+    image: null,
   });
 
   const handleChange = (e) => {
@@ -67,7 +67,7 @@ export default function RegisterPage() {
         const imageUrl = data.data.url;
         setProfileImageUrl(imageUrl);
         setPreviewImage(imageUrl);
-        setFormData(prev => ({ ...prev, profileImage: imageUrl }));
+        setFormData(prev => ({ ...prev, image: imageUrl }));
         toast.success("Image uploaded successfully!");
       } else {
         toast.error("Upload failed. Check API Key.");
@@ -84,7 +84,7 @@ export default function RegisterPage() {
   const removeImage = () => {
     setPreviewImage(null);
     setProfileImageUrl('');
-    setFormData(prev => ({ ...prev, profileImage: null }));
+    setFormData(prev => ({ ...prev, image: null }));
   };
 
   const handleRegister = async (e) => {
@@ -94,12 +94,17 @@ export default function RegisterPage() {
       return;
     }
 
+    // console.log('Register attempt:', { ...formData, profileImageUrl });
+
     const { error } = await authClient.signUp.email({
       ...formData,
+      // verified: "unverified",
+      ...(formData.role === "doctor" && { verified: "unverified" })
     })
     if(error) {
       toast.error(`Registration failed: ${error.message}`);
     }
+
     
     toast.success("Registration successful!");
     router.push('/dashboard');
@@ -239,13 +244,13 @@ export default function RegisterPage() {
                     CLINIC ROLE
                   </label>
                   <select
-                    name="clinicRole"
-                    value={formData.clinicRole}
+                    name="role"
+                    value={formData.role}
                     onChange={handleChange}
                     className="w-full py-3.5 px-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:border-primary text-sm"
                   >
-                    <option value="Patient Client">Patient Client</option>
-                    <option value="Medical Specialist">Medical Specialist</option>
+                    <option value="patient">Patient Client</option>
+                    <option value="doctor">Medical Specialist</option>
                   </select>
                 </div>
 
