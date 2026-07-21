@@ -7,8 +7,13 @@ import Link from 'next/link';
 import { Button } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter()
+
+  const { data: session, isPending } = authClient.useSession();
+  
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,13 +23,18 @@ export default function LoginPage() {
 
     const {error} = authClient.signIn.email({
       email,
-      password,
-      callbackURL: '/dashboard'
+      password
     })
     
     if(error) {
       toast.error(error.message);
       return
+    }
+
+    if(session?.user && !isPending){
+      const role = session?.user?.role
+      toast.success('Login Successful')
+      router.push(`/dashboard/${role}/dashboard`)
     }
     // console.log('Login attempt with:', { email, password });
   };

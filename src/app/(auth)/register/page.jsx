@@ -107,7 +107,7 @@ export default function RegisterPage() {
 
     
     toast.success("Registration successful!");
-    router.push('/dashboard');
+    router.push(`/dashboard/${formData.role}/dashboard`);
 
     // console.log('Register attempt:', { ...formData, profileImageUrl });
   };
