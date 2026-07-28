@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Input, Button } from '@heroui/react';
+import { Button } from '@heroui/react';
 import { Search, LayoutGrid, List, MapPin, Clock, DollarSign } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import Link from 'next/link';
 
 const specialties = [
-    'All Specialties',
+  'All Specialties',
   'Cardiology',
   'Neurology',
   'Orthopedics',
@@ -17,7 +17,7 @@ const specialties = [
   'Psychiatry',
 ];
 
-export default function AllDoctorsSection({allDoctors}) {
+export default function AllDoctorsSection({ allDoctors = [] }) {
   const [search, setSearch] = useState('');
   const [specialty, setSpecialty] = useState('All Specialties');
   const [sortBy, setSortBy] = useState('fee-low');
@@ -31,7 +31,6 @@ export default function AllDoctorsSection({allDoctors}) {
         doc.name.toLowerCase().includes(search.toLowerCase())
       );
     }
-    
 
     if (specialty !== 'All Specialties') {
       result = result.filter((doc) => doc.specialty === specialty);
@@ -46,7 +45,7 @@ export default function AllDoctorsSection({allDoctors}) {
     }
 
     return result;
-  }, [search, specialty, sortBy]);
+  }, [allDoctors, search, specialty, sortBy]);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -163,7 +162,6 @@ export default function AllDoctorsSection({allDoctors}) {
       </div>
 
       {/* Doctors List */}
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {filteredDoctors.length === 0 ? (
           <div className="text-center py-20 text-slate-500">
@@ -227,11 +225,11 @@ export default function AllDoctorsSection({allDoctors}) {
                           </div>
                         </div>
 
-                        <Button
-                          className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl"
-                        >
-                          View Profile
-                        </Button>
+                        <Link href={`/find-doctors/${doctor._id}`} className="block w-full">
+                          <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl">
+                            View Profile
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   ) : (
@@ -277,12 +275,14 @@ export default function AllDoctorsSection({allDoctors}) {
                               </span>
                             </div>
 
-                            <Button
-                              size="sm"
-                              className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl"
-                            >
-                              View Profile
-                            </Button>
+                            <Link href={`/find-doctors/${doctor._id}`}>
+                              <Button
+                                size="sm"
+                                className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl"
+                              >
+                                View Profile
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       </div>
