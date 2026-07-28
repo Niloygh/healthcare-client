@@ -4,8 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import AllDoctors from '../AllDoctors';
 import Statistics from './Statistics';
+import AllDoctorsCard from '../HomeAllDoctors';
 
 export default function FeaturedDoctors({ doctors = [] }) {
 
@@ -136,7 +136,7 @@ export default function FeaturedDoctors({ doctors = [] }) {
                 transition: { duration: 0.3 }
               }}
             >
-              <AllDoctors doctor={doctor} />
+              <AllDoctorsCard doctor={doctor} />
             </motion.div>
           ))}
         </motion.div>

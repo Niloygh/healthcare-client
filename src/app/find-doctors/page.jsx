@@ -1,3 +1,4 @@
+import AllDoctorsSection from '@/component/AllDoctorsSection';
 import { AllDoctors } from '@/lib/action/doctors';
 import React from 'react';
 
@@ -9,7 +10,7 @@ const FindDoctor = async () => {
     
     return (
         <div>
-            find doctor page
+            <AllDoctorsSection allDoctors={allDoctors} />
         </div>
     );
 };

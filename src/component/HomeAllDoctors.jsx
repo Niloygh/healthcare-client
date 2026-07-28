@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AllDoctors = ({ doctor }) => {
+const AllDoctorsCard = ({ doctor }) => {
     return (
         <div
             className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
@@ -39,4 +39,4 @@ const AllDoctors = ({ doctor }) => {
     );
 };
 
-export default AllDoctors;
+export default AllDoctorsCard;
