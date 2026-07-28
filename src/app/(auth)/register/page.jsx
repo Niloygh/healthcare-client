@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, User, Mail, Lock, Heart, Upload, X } from 'lucide-react';
+import { Eye, EyeOff, User, Mail, Lock, Heart, Upload, X, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
@@ -36,6 +36,8 @@ export default function RegisterPage() {
 
   // ImgBB Upload Handler
   const handleImageChange = async (e) => {
+    // console.log(e.target.files[0])
+    
     const file = e.target.files[0];
     if (!file) return;
 
@@ -310,9 +312,10 @@ export default function RegisterPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-2xl font-semibold text-base transition-all mt-2"
+                className="flex justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-2xl font-semibold text-base transition-all mt-2"
               >
-                Generate Private Identity
+                <span>Create Account</span>
+                <span><ArrowRight /></span>
               </motion.button>
 
             </form>
