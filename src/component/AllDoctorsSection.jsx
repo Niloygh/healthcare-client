@@ -26,10 +26,16 @@ export default function AllDoctorsSection({ allDoctors = [] }) {
   const filteredDoctors = useMemo(() => {
     let result = [...allDoctors];
 
-    if (search) {
-      result = result.filter((doc) =>
-        doc.name.toLowerCase().includes(search.toLowerCase())
-      );
+    if (search.trim()) {
+      const query = search.toLowerCase().trim();
+      result = result.filter((doc) => {
+        const nameMatch = doc.name?.toLowerCase().includes(query);
+        const descriptionMatch = doc.description?.toLowerCase().includes(query);
+        const qualificationsMatch = doc.qualifications?.toLowerCase().includes(query);
+        
+        // Name, Description ba Qualifications — er jekono ekta match korlei result-e ashbe
+        return nameMatch || descriptionMatch || qualificationsMatch;
+      });
     }
 
     if (specialty !== 'All Specialties') {
@@ -79,13 +85,13 @@ export default function AllDoctorsSection({ allDoctors = [] }) {
             {/* Search */}
             <div className="space-y-1.5">
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                Search Doctor Name
+                Search Doctor or Keyword
               </label>
               <div className="relative">
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="e.g. Amanda Ross..."
+                  placeholder="Search name, description..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/25 focus:border-teal-500 transition"

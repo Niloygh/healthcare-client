@@ -295,7 +295,7 @@ const currentDate = getTodayDate()
             {/* Book Button */}
 
             <form action={"/api/payment"} method='POST' onSubmit={handleBooking}>
-              <input type="hidden" value={doctor._id} name='doctorId' />
+              <input className='hidden' value={doctor._id} name='doctorId' />
               <input type="hidden" value={doctor.name} name='doctorName' />
               <input type="hidden" value={doctor.fee} name='amount' />
               <input type="hidden" value={currentDate} name='paymentDate' />

@@ -9,15 +9,18 @@ export async function POST(request) {
     const headersList = await headers()
     const origin = headersList.get('origin')
     const formData = await request.formData()
+    // console.log(formData)
 
     const userSession = await auth.api.getSession({
         headers: await headers()
     })
     const user = userSession.user
     
+    console.log({formData})
 
     const patientId = user?.id
     const doctorId = formData.get('doctorId')
+    
     const doctorName = formData.get('doctorName')
     const amount = formData.get('amount')
     const paymentDate = formData.get('paymentDate')
@@ -46,6 +49,7 @@ export async function POST(request) {
         doctorName,
         amount,
         paymentDate,
+        request: "pending"
       },
       mode: 'payment',
       success_url: `${origin}/success-payment?session_id={CHECKOUT_SESSION_ID}`,
