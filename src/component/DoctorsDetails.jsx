@@ -17,15 +17,17 @@ import { authClient } from '@/lib/auth-client';
 
 export default function DoctorDetails({ doctor }) {
 
-    const user = authClient.useSession().data?.user;
-    // console.log(user.email)
-    
+  const user = authClient.useSession().data?.user;
+  // console.log(user.email)
+
   const [selectedDay, setSelectedDay] = useState(
     doctor?.date?.[0]?.day || ''
   );
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [symptoms, setSymptoms] = useState('');
+
+  
 
   // Get available times for selected day
   const availableTimes =
@@ -61,6 +63,20 @@ export default function DoctorDetails({ doctor }) {
     );
   }
 
+
+
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const currentDate = getTodayDate()
+// console.log(currentDate)
+
+// console.log(getTodayDate)
   return (
     <div className="min-h-screen bg-[#f8fafc] py-10 px-4">
       <div className="max-w-6xl mx-auto">
@@ -219,11 +235,10 @@ export default function DoctorDetails({ doctor }) {
                       setSelectedDay(item.day);
                       setSelectedTime('');
                     }}
-                    className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition ${
-                      selectedDay === item.day
-                        ? 'bg-teal-600 text-white'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
+                    className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition ${selectedDay === item.day
+                      ? 'bg-teal-600 text-white'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
                   >
                     {item.day}
                   </button>
@@ -278,12 +293,24 @@ export default function DoctorDetails({ doctor }) {
             </div>
 
             {/* Book Button */}
-            <Button
-              onPress={handleBooking}
-              className="w-full h-12 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-xl text-base"
-            >
-              Book Appointment (${doctor.fee})
-            </Button>
+
+            <form action={"/api/payment"} method='POST' onSubmit={handleBooking}>
+              <input type="hidden" value={doctor._id} name='doctorId' />
+              <input type="hidden" value={doctor.name} name='doctorName' />
+              <input type="hidden" value={doctor.fee} name='amount' />
+              <input type="hidden" value={currentDate} name='paymentDate' />
+              
+              <Button
+              isDisabled={!symptoms || !selectedTime || !selectedTime}
+              type='submit'
+                className="w-full h-12 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-xl text-base"
+              >
+                Book Appointment (${doctor.fee})
+              </Button>
+
+            </form>
+
+
           </motion.div>
         </div>
       </div>
