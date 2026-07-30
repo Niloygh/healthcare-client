@@ -1,10 +1,10 @@
-import { payment } from '@/lib/action/payment'
 import { stripe } from '@/lib/stripe'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle2, ArrowRight, Mail, HelpCircle } from 'lucide-react'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
+import { payment } from '@/lib/action/payment'
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
