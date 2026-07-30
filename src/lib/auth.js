@@ -7,6 +7,10 @@ const db = client.db('healthcare');
 
 export const auth = betterAuth({
 
+    advanced: {
+        disableOriginCheck: true,
+    },
+
     emailAndPassword: {
         enabled: true,
     },
