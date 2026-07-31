@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Button, Input, Textarea } from '@heroui/react';
 import {
-  MapPin,
   Clock,
   DollarSign,
   GraduationCap,
@@ -14,8 +13,11 @@ import {
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
+import { appointment } from '@/lib/action/appointment';
 
 export default function DoctorDetails({ doctor }) {
+
+  // console.log(doctor)
 
   const user = authClient.useSession().data?.user;
   // console.log(user.email)
@@ -33,26 +35,32 @@ export default function DoctorDetails({ doctor }) {
   const availableTimes =
     doctor?.date?.find((d) => d.day === selectedDay)?.times || [];
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
+    
     if (!selectedDay || !selectedTime || !selectedDate) {
       toast.error('Please select day, date and time slot');
-      return;
+      return;      
     }
 
     const formData = {
-      clientId: user.id,
-      clientEmail: user.email,
-      doctorId: doctor._id,
+      clientId: user?.id,
+      clientEmail: user?.email,
+      doctorId: doctor?._id,
       day: selectedDay,
       date: selectedDate,
       time: selectedTime,
       symptoms,
-      fee: doctor.fee,
+      fee: doctor?.fee,
+      paymentStatus: false,
     };
-
     // console.log(formData)
 
+    const appointmentData = await appointment(formData) 
+    
     toast.success('Appointment request submitted!');
+
+     
+    
   };
 
   if (!doctor) {
@@ -295,13 +303,14 @@ const currentDate = getTodayDate()
             {/* Book Button */}
 
             <form action={"/api/payment"} method='POST' onSubmit={handleBooking}>
-              <input className='hidden' value={doctor._id} name='doctorId' />
+              <input type="hidden" value={doctor._id} name='doctorId' />
               <input type="hidden" value={doctor.name} name='doctorName' />
               <input type="hidden" value={doctor.fee} name='amount' />
               <input type="hidden" value={currentDate} name='paymentDate' />
               
               <Button
-              isDisabled={!symptoms || !selectedTime || !selectedTime}
+              isDisabled={!symptoms || !selectedTime || !selectedDate || !selectedDay}
+              onClick={handleBooking}
               type='submit'
                 className="w-full h-12 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-xl text-base"
               >

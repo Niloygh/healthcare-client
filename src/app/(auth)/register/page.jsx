@@ -36,6 +36,7 @@ export default function RegisterPage() {
 
   // ImgBB Upload Handler
   const handleImageChange = async (e) => {
+    e.preventDefault();
     // console.log(e.target.files[0])
     
     const file = e.target.files[0];

@@ -50,7 +50,7 @@ export async function POST(request) {
         patientId,
         doctorId: String(doctorId || ''),
         doctorName: String(doctorName || ''),
-        amount: String(amount), // ৩. মেটাডেটা অবশ্যই স্ট্রিং হতে হবে
+        amount: String(amount), //
         paymentDate: String(paymentDate || ''),
         request: "pending"
       },

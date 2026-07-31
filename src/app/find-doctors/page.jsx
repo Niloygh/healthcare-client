@@ -6,6 +6,7 @@ const FindDoctor = async ({searchParams}) => {
 
     const allDoctors = await AllDoctors()
 
+
     // console.log(allDoctors)
     const searchQuery = await searchParams;
     const searchText = searchQuery.search || ""
