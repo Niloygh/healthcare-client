@@ -1,12 +1,18 @@
 'use server'
 
+import { getTokenServer } from "../getTokenServer";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const createDoctors = async (newDoctors) => {
+
+    // const token = await getTokenServer()
+    
     const res = await fetch(`${baseUrl}/doctors`, {
         method: "PUT",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            // authorization: `Bearer ${token}`
         },
         body: JSON.stringify(newDoctors)
     });
@@ -21,6 +27,12 @@ export const createDoctors = async (newDoctors) => {
 
 export const AllDoctors = async () => {
     const res = await fetch(`${baseUrl}/doctors`)
+    const data = await res.json()
+    return data
+}
+
+export const limitDoctors = async () => {
+    const res = await fetch(`${baseUrl}/limit-doctors`)
     const data = await res.json()
     return data
 }

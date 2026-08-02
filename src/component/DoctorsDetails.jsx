@@ -29,19 +29,22 @@ export default function DoctorDetails({ doctor }) {
   const [selectedDate, setSelectedDate] = useState('');
   const [symptoms, setSymptoms] = useState('');
 
-  
+
 
   // Get available times for selected day
   const availableTimes =
     doctor?.date?.find((d) => d.day === selectedDay)?.times || [];
 
-  const handleBooking = async () => {
-    
-    if (!selectedDay || !selectedTime || !selectedDate) {
-      toast.error('Please select day, date and time slot');
-      return;      
-    }
+  const handleBooking = async (e) => {
+  e.preventDefault();
 
+  if (!selectedDay || !selectedTime || !selectedDate) {
+    toast.error('Please select day, date and time slot');
+    return;      
+  }
+
+  try {
+   
     const formData = {
       clientId: user?.id,
       clientEmail: user?.email,
@@ -53,15 +56,45 @@ export default function DoctorDetails({ doctor }) {
       fee: doctor?.fee,
       paymentStatus: false,
     };
-    // console.log(formData)
 
-    const appointmentData = await appointment(formData) 
-    
-    toast.success('Appointment request submitted!');
+    const appointmentData = await appointment(formData);
 
-     
-    
-  };
+    if (appointmentData?.success) {
+      toast.success('Appointment created! Preparing payment...');
+
+      
+      const response = await fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          appointmentId: appointmentData.appointment_result?.insertedId,
+          doctorId: doctor?._id,
+          doctorName: doctor?.name,
+          amount: doctor?.fee,
+          paymentDate: currentDate,
+        }),
+      });
+
+      const paymentResponse = await response.json();
+
+      
+      // if (response.ok && paymentResponse?.url) {
+      //   // eslint-disable-next-line react-hooks/immutability
+      //   window.location.href = paymentResponse.url; // <-- Un-commented and fixed
+      // } else {
+      //   toast.error(paymentResponse?.error || 'Payment initialization failed');
+      // }
+
+    } else {
+      toast.error(appointmentData?.message || 'Failed to book appointment');
+    }
+  } catch (error) {
+    console.error('Booking or Payment Error:', error);
+    toast.error('An error occurred during process');
+  }
+};
 
   if (!doctor) {
     return (
@@ -73,18 +106,18 @@ export default function DoctorDetails({ doctor }) {
 
 
 
-const getTodayDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
-const currentDate = getTodayDate()
-// console.log(currentDate)
+  const currentDate = getTodayDate()
+  // console.log(currentDate)
 
-// console.log(getTodayDate)
+  // console.log(getTodayDate)
   return (
     <div className="min-h-screen bg-[#f8fafc] py-10 px-4">
       <div className="max-w-6xl mx-auto">
@@ -302,16 +335,15 @@ const currentDate = getTodayDate()
 
             {/* Book Button */}
 
-            <form action={"/api/payment"} method='POST' onSubmit={handleBooking}>
-              <input type="hidden" value={doctor._id} name='doctorId' />
+            <form onSubmit={handleBooking}>
+              {/* <input type="hidden" value={doctor._id} name='doctorId' />
               <input type="hidden" value={doctor.name} name='doctorName' />
               <input type="hidden" value={doctor.fee} name='amount' />
-              <input type="hidden" value={currentDate} name='paymentDate' />
-              
+              <input type="hidden" value={currentDate} name='paymentDate' /> */}
+
               <Button
-              isDisabled={!symptoms || !selectedTime || !selectedDate || !selectedDay}
-              onClick={handleBooking}
-              type='submit'
+                // isDisabled={!symptoms || !selectedTime || !selectedDate || !selectedDay}
+                type='submit'
                 className="w-full h-12 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-xl text-base"
               >
                 Book Appointment (${doctor.fee})

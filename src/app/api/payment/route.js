@@ -6,7 +6,7 @@ import { auth } from '@/lib/auth';
 export async function POST(request) {
   try {
     const headersList = await headers();
-    // Origin না পেলে .env থেকে অ্যাপের লিংক নিবে
+   
     const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'; 
     const formData = await request.formData();
 
@@ -16,7 +16,7 @@ export async function POST(request) {
 
     
     if (!userSession || !userSession.user) {
-      return NextResponse.json({ error: "Unauthorized access. Please login." }, { status: 401 });
+      return NextResponse.json({ error: "n Unauthorized access. Please login." }, { status: 401 });
     }
 
     const user = userSession.user;
@@ -39,7 +39,7 @@ export async function POST(request) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `Appointment with ${doctorName || 'Doctor'}`, // ২. ডাক্তারের নাম দেখানো
+              name: `Appointment with ${doctorName || 'Doctor'}`, 
             },
             unit_amount: Number(amount) * 100,
           },
