@@ -2,6 +2,7 @@
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+// payment post api 
 export const payment = async (data) => {
     const res = await fetch(`${baseUrl}/payment`, {
         method: 'POST',
@@ -14,3 +15,6 @@ export const payment = async (data) => {
     const result = await res.json()
     return result
 }
+
+
+
