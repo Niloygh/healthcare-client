@@ -8,7 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const appointment = async (data) => {
 
     const token = await getTokenServer()
-    
+
     const res = await fetch(`${baseUrl}/appointment`, {
         method: 'POST',
         headers: {
@@ -27,13 +27,14 @@ export const getAppointment = async (clientEmail) => {
     const res = await fetch(`${baseUrl}/appointment/${clientEmail}`)
 
     if (!res.ok) {
-      return null;
+        return null;
     }
-    
+
     const result = await res.json()
     return result
 }
 
+// delete api 
 export const DeleteAppointment = async (appointmentId) => {
     const res = await fetch(`${baseUrl}/appointment/${appointmentId}`, {
         method: 'DELETE',
@@ -44,5 +45,25 @@ export const DeleteAppointment = async (appointmentId) => {
 
     const result = await res.json()
     return result
-    
+
+}
+
+
+// update api 
+
+export const updateAppointment = async (appointmentId, updatedData) => {
+    const res = await fetch(`${baseUrl}/appointment/${appointmentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            date: updatedData.date, 
+            day: updatedData.day,   
+            time: updatedData.time,
+        }),
+    })
+
+    const result = await res.json()
+    return result
 }

@@ -73,3 +73,16 @@ export const updateDoctorSchedule = async (scheduleData) => {
 
     return data
 }
+
+export const getDoctorById = async (id) => {
+    if (!id) return null;
+
+    const res = await fetch(`${baseUrl}/doctor/${id}`);
+
+    if (!res.ok) {
+        return null;
+    }
+
+    const data = await res.json();
+    return data;
+}
