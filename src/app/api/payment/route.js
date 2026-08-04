@@ -8,7 +8,7 @@ export async function POST(request) {
     const headersList = await headers();
    
     const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'; 
-    const formData = await request.formData();
+    const body = await request.json();
 
     const userSession = await auth.api.getSession({
         headers: headersList
@@ -21,10 +21,11 @@ export async function POST(request) {
 
     const user = userSession.user;
     const patientId = String(user.id);
-    const doctorId = formData.get('doctorId');
-    const doctorName = formData.get('doctorName');
-    const amount = formData.get('amount');
-    const paymentDate = formData.get('paymentDate');
+    const doctorId = body.doctorId;
+    const doctorName = body.doctorName;
+    const amount = body.amount;
+    const paymentDate = body.paymentDate;
+    const appointmentId = body.appointmentId;
 
     
     if (!amount || isNaN(amount)) {
@@ -52,13 +53,14 @@ export async function POST(request) {
         doctorName: String(doctorName || ''),
         amount: String(amount), //
         paymentDate: String(paymentDate || ''),
+        appointmentId: String(appointmentId || ''),
         request: "pending"
       },
       mode: 'payment',
       success_url: `${origin}/success-payment?session_id={CHECKOUT_SESSION_ID}`,
     });
 
-    return NextResponse.redirect(session.url, 303);
+    return NextResponse.json({ url: session.url });
 
   } catch (err) {
     console.error("Payment API Error:", err);

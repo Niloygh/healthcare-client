@@ -49,6 +49,7 @@ export default function DoctorDetails({ doctor }) {
       clientId: user?.id,
       clientEmail: user?.email,
       doctorId: doctor?._id,
+      doctorName: doctor?.name,
       day: selectedDay,
       date: selectedDate,
       time: selectedTime,
@@ -80,12 +81,12 @@ export default function DoctorDetails({ doctor }) {
       const paymentResponse = await response.json();
 
       
-      // if (response.ok && paymentResponse?.url) {
-      //   // eslint-disable-next-line react-hooks/immutability
-      //   window.location.href = paymentResponse.url; // <-- Un-commented and fixed
-      // } else {
-      //   toast.error(paymentResponse?.error || 'Payment initialization failed');
-      // }
+      if (response.ok && paymentResponse?.url) {
+        // eslint-disable-next-line react-hooks/immutability
+        window.location.href = paymentResponse.url;
+      } else {
+        toast.error(paymentResponse?.error || 'Payment initialization failed');
+      }
 
     } else {
       toast.error(appointmentData?.message || 'Failed to book appointment');

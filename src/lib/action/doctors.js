@@ -27,6 +27,11 @@ export const createDoctors = async (newDoctors) => {
 
 export const AllDoctors = async () => {
     const res = await fetch(`${baseUrl}/doctors`)
+    
+    if (!res.ok) {
+      return null;
+    }
+    
     const data = await res.json()
     return data
 }
@@ -40,12 +45,7 @@ export const limitDoctors = async () => {
 export const getDoctorByEmail = async (email) => {
     if (!email) return null;
 
-    const res = await fetch(`${baseUrl}/doctors/${email}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const res = await fetch(`${baseUrl}/doctors/${email}`,)
 
     if (!res.ok) {
       return null;

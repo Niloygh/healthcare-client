@@ -1,37 +1,23 @@
 import React from "react";
 import Image from "next/image";
 import { Card, Button, Chip } from "@heroui/react";
-import { 
-  User, 
-  Mail, 
-  ShieldAlert, 
-  ShieldCheck, 
-  Calendar, 
-  Clock, 
-  UserCheck, 
-  Edit3 
+import {
+  User,
+  Mail,
+  Calendar,
+  Clock,
+  UserCheck,
 } from "lucide-react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function ProfilePage() {
-  // আপনার দেয়া ডাটা
-  const userData = {
-    name: "patient",
-    email: "patient@gamil.com",
-    emailVerified: false,
-    image: "https://i.ibb.co/yB7g491S/download.jpg",
-    createdAt: "2026-07-29T14:41:12.220+00:00",
-    updatedAt: "2026-07-29T14:41:12.220+00:00",
-    role: "patient",
-  };
+export default async function ProfilePage() {
 
-  // ডেট ফরম্যাট করার জন্য হেল্পার ফাংশন
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+  const userData = session?.user;
+  // console.log(session)
 
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8">
@@ -51,7 +37,7 @@ export default function ProfilePage() {
 
       {/* Main Card without CardBody */}
       <Card className="border border-slate-200/80 shadow-sm rounded-2xl bg-white dark:bg-slate-900 p-6 md:p-8">
-        
+
         {/* Top Avatar Profile Bar */}
         <div className="flex items-center gap-5 pb-6 mb-6 border-b border-slate-100 dark:border-slate-800">
           <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-slate-200 shadow-sm">
@@ -67,10 +53,10 @@ export default function ProfilePage() {
             <h2 className="text-xl font-bold capitalize text-slate-800 dark:text-slate-100">
               {userData.name}
             </h2>
-            <Chip 
-              size="sm" 
-              variant="flat" 
-              color="default" 
+            <Chip
+              size="sm"
+              variant="flat"
+              color="default"
               className="mt-1 capitalize text-xs font-semibold text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-300"
             >
               {userData.role}
@@ -80,7 +66,7 @@ export default function ProfilePage() {
 
         {/* Form / Field Layout (Grid) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
+
           {/* Name Field */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
@@ -119,41 +105,7 @@ export default function ProfilePage() {
                   {userData.email}
                 </span>
               </div>
-              {userData.emailVerified ? (
-                <Chip size="sm" color="success" variant="flat" startContent={<ShieldCheck className="w-3.5 h-3.5" />}>
-                  Verified
-                </Chip>
-              ) : (
-                <Chip size="sm" color="warning" variant="flat" startContent={<ShieldAlert className="w-3.5 h-3.5" />}>
-                  Unverified
-                </Chip>
-              )}
-            </div>
-          </div>
-
-          {/* Account Created Field */}
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-              ACCOUNT CREATED
-            </label>
-            <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-              <Calendar className="w-4 h-4 text-slate-400" />
-              <span className="text-slate-700 dark:text-slate-200 font-medium">
-                {formatDate(userData.createdAt)}
-              </span>
-            </div>
-          </div>
-
-          {/* Last Updated Field (Full Width) */}
-          <div className="md:col-span-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-              LAST PROFILE UPDATE
-            </label>
-            <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-              <Clock className="w-4 h-4 text-slate-400" />
-              <span className="text-slate-700 dark:text-slate-200 font-medium">
-                {formatDate(userData.updatedAt)}
-              </span>
+              
             </div>
           </div>
 

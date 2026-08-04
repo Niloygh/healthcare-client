@@ -32,7 +32,7 @@ const DashboardAllChildren = async ({children}) => {
             {
                 title: "Feedback Review",
                 icon: <Star />,
-                href: "/dashboard/patient/reviews"
+                href: "/dashboard/patient/feedback"
             },
             {
                 title: "My Profile",
