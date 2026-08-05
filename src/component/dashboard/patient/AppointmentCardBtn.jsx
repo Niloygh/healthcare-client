@@ -47,7 +47,6 @@ const AppointmentCardBtn = ({ onReschedule, onCancel, isCompleted, appointment }
         }
     };
 
-    // Selected day অনুযায়ী ডাক্তারের available times ফিল্টার করা
     const availableTimes = doctor?.date?.find((d) => d.day === selectedDay)?.times || [];
 
     // Handle Submit Reschedule
@@ -103,7 +102,7 @@ const AppointmentCardBtn = ({ onReschedule, onCancel, isCompleted, appointment }
                         >
                             {isCanceling ? 'Canceling...' : 'Cancel'}
                         </button>
-                    </>
+                    </>                    
                 )}
             </div>
 

@@ -39,6 +39,13 @@ export default function LoginPage() {
     // console.log('Login attempt with:', { email, password });
   };
 
+  const handleGoogleSignin = async()=> {
+    await authClient.signIn.social({
+      provider: "google"
+    })
+  }
+  
+
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Form */}
@@ -150,6 +157,7 @@ export default function LoginPage() {
 
               <div className="">
                 <motion.button
+                onClick={handleGoogleSignin}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-full border border-slate-200 dark:border-slate-700 py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-sm"
@@ -182,7 +190,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Floating Icons - ছোট ও অবস্থান অ্যাডজাস্ট */}
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ repeat: Infinity, duration: 3 }}

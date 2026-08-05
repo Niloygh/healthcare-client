@@ -4,41 +4,21 @@ import { useState } from "react";
 import { Edit, Trash2, Star, X, Plus, User } from "lucide-react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
-import { review } from "@/lib/action/revidew";
+import { deleteReview, review } from "@/lib/action/revidew";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-export default function PractitionerFeedback({ addAllDoctors, user, allReviews }) {  
-    // const router 
-    // console.log(user)
+export default function PractitionerFeedback({ addAllDoctors, user, allReviews }) {
+  const router = useRouter();
 
-//   const [allReviews, setReviews] = useState([
-//     {
-//       id: "1",
-//       doctorName: "Dr. Amanda Ross",
-//       specialty: "Cardiology",
-//       rating: 5,
-//       comment:
-//         "Dr. Amanda Ross saved my father's life. Her precision, caring personality, and clear explanations made a stressful surgery very manageable. Highly recommended!",
-//       publishedDate: "5/25/2026",
-//       image: "",
-//     },
-//     {
-//       id: "2",
-//       doctorName: "Dr. Sophia Patel",
-//       specialty: "Pediatrics",
-//       rating: 4,
-//       comment:
-//         "Very friendly environment! She is amazing with toddlers, very patient and gentle. My little daughter loved her clinic.",
-//       publishedDate: "6/1/2026",
-//       image: "",
-//     },
-//   ]);
+
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(addAllDoctors[0]?._id || "");
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [isCanceling, setIsCanceling] = useState(false);
 
   const selectedDoctor = addAllDoctors.find((doc) => doc._id === selectedDoctorId);
 
@@ -50,7 +30,7 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
       clientId: user?.id,
       clientEmail: user?.email,
       doctorId: selectedDoctor?._id,
-      doctorName: `Dr. ${selectedDoctor?.name}`,
+      doctorName: `${selectedDoctor?.name}`,
       specialty: selectedDoctor?.specialty,
       rating: rating,
       comment: comment,
@@ -61,19 +41,30 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
     // console.log(newReview);
 
     const reviewData = await review(newReview)
-    
+
     // setReviews([newReview, ...allReviews]);
-    setComment("");
-    setRating(5);
+    router.refresh();
+
+    // setComment("");
+    // setRating(5);
     setIsOpenModal(false);
   };
 
-  
 
-  const handleDelete = (id) => {
+
+  const handleDelete = async (id) => {
+    console.log(id)
+
+
     if (confirm("Are you sure you want to delete this review?")) {
-    //   setReviews(allReviews.filter((review) => review._id !== id));
-        toast.success('Delete Successfully')
+      setIsCanceling(true);
+
+      const DeleteR = await deleteReview(id)
+      if (DeleteR) {
+        router.refresh();
+      }
+
+      setIsCanceling(false);
     }
   };
 
@@ -138,11 +129,10 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
                   {[...Array(5)].map((_, index) => (
                     <Star
                       key={index}
-                      className={`w-3.5 h-3.5 ${
-                        index < review.rating
-                          ? "text-amber-500 fill-amber-500"
-                          : "text-slate-200"
-                      }`}
+                      className={`w-3.5 h-3.5 ${index < review.rating
+                        ? "text-amber-500 fill-amber-500"
+                        : "text-slate-200"
+                        }`}
                     />
                   ))}
                 </div>
@@ -165,7 +155,7 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => handleDelete(review.id)}
+                  onClick={() => handleDelete(review._id)}
                   className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                   title="Delete"
                 >
@@ -228,11 +218,10 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
                       className="p-1 focus:outline-none transition-transform hover:scale-110"
                     >
                       <Star
-                        className={`w-6 h-6 ${
-                          star <= (hoverRating || rating)
-                            ? "text-amber-400 fill-amber-400"
-                            : "text-slate-200"
-                        }`}
+                        className={`w-6 h-6 ${star <= (hoverRating || rating)
+                          ? "text-amber-400 fill-amber-400"
+                          : "text-slate-200"
+                          }`}
                       />
                     </button>
                   ))}

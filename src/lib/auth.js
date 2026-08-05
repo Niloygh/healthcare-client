@@ -8,6 +8,11 @@ const db = client.db('healthcare');
 
 export const auth = betterAuth({
 
+    database: mongodbAdapter(db, {
+        // Optional: if you don't provide a client, database transactions won't be enabled.
+        client
+    }),
+
     advanced: {
         disableOriginCheck: true,
     },
@@ -16,11 +21,13 @@ export const auth = betterAuth({
         enabled: true,
     },
 
-    database: mongodbAdapter(db, {
-        // Optional: if you don't provide a client, database transactions won't be enabled.
-        client
-    }),
-
+    socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID, 
+            clientSecret: process.env.GOOGLE_SECRET, 
+        }, 
+    },
+    
     user: {
         additionalFields: {
             role: {
@@ -44,8 +51,6 @@ export const auth = betterAuth({
             }
         }
     },
-
-
 
     session: {
         cookieCache: {

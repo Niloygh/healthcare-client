@@ -21,3 +21,16 @@ export const getReview = async (clientId) => {
     const result = await res.json()
     return result
 }
+
+
+// delete review
+export const deleteReview = async (id) => {
+    const res = await fetch(`${baseUrl}/review/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    const result = await res.json()
+    return result
+}
