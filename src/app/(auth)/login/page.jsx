@@ -160,7 +160,7 @@ export default function LoginPage() {
                 onClick={handleGoogleSignin}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full border border-slate-200 dark:border-slate-700 py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-sm"
+                  className="w-full border border-slate-200 dark:border-slate-700 py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-sm cursor-pointer"
                 >
                   Google
                 </motion.button>

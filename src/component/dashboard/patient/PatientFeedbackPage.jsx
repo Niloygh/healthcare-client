@@ -42,7 +42,6 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
 
     const reviewData = await review(newReview)
 
-    // setReviews([newReview, ...allReviews]);
     router.refresh();
 
     // setComment("");
@@ -67,6 +66,15 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
       setIsCanceling(false);
     }
   };
+
+  const handleEdit =  async (id) => {
+    setIsCanceling(true);
+
+    
+
+    setIsCanceling(false);
+  }
+  
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-8">
@@ -149,11 +157,13 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
               <span>Published: {review.publishedDate}</span>
               <div className="flex items-center gap-1">
                 <button
+                onClick={() => handleEdit(review._id)}
                   className="p-2 text-slate-500 hover:text-[#215a45] hover:bg-emerald-50 rounded-lg transition-colors"
                   title="Edit"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
+
                 <button
                   onClick={() => handleDelete(review._id)}
                   className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
@@ -163,6 +173,11 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
                 </button>
               </div>
             </div>
+
+            
+
+
+            
           </div>
         ))}
       </div>

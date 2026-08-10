@@ -18,3 +18,9 @@ export const payment = async (data) => {
 
 
 
+// payment get api 
+export const allPayment = async(id) => {
+    const res = await fetch(`${baseUrl}/all-payment/${id}`)
+    const result = await res.json()
+    return result    
+}

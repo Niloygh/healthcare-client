@@ -34,3 +34,19 @@ export const deleteReview = async (id) => {
     const result = await res.json()
     return result
 }
+
+
+export const editReview = async (id, editData) => {
+    const res = await fetch(`${baseUrl}/appointment/${appointmentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            editData
+        }),
+    })
+
+    const result = await res.json()
+    return result
+}
