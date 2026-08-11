@@ -20,7 +20,7 @@ export async function POST(request) {
     }
 
     const user = userSession.user;
-    const patientId = String(user.id);
+    const clientId = String(user.id);
     const doctorId = body.doctorId;
     const doctorName = body.doctorName;
     const amount = body.amount;
@@ -48,7 +48,7 @@ export async function POST(request) {
         },
       ],
       metadata: {
-        patientId,
+        clientId,
         doctorId: String(doctorId || ''),
         doctorName: String(doctorName || ''),
         amount: String(amount), //
