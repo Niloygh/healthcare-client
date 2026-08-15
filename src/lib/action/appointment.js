@@ -49,8 +49,7 @@ export const DeleteAppointment = async (appointmentId) => {
 }
 
 
-// update api 
-
+// update api date update
 export const updateAppointment = async (appointmentId, updatedData) => {
     const res = await fetch(`${baseUrl}/appointment/${appointmentId}`, {
         method: 'PATCH',
@@ -59,11 +58,31 @@ export const updateAppointment = async (appointmentId, updatedData) => {
         },
         body: JSON.stringify({
             date: updatedData.date, 
-            day: updatedData.day,   
+            day: updatedData.day,
             time: updatedData.time,
         }),
     })
 
     const result = await res.json()
     return result
+}
+
+
+// status update api for doctor 
+// appointment status update PATCH api (Accept / Reject)
+export const updateAppointmentStatus = async (appointmentId, appointmentStatus) => {
+    // const token = await getTokenServer();
+
+    const res = await fetch(`${baseUrl}/appointment/status/${appointmentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            // authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ appointmentStatus })
+    });
+
+    const result = await res.json();
+
+    return result;
 }

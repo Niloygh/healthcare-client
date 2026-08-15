@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const createDoctors = async (newDoctors) => {
 
     // const token = await getTokenServer()
-    
+
     const res = await fetch(`${baseUrl}/doctors`, {
         method: "PUT",
         headers: {
@@ -27,11 +27,11 @@ export const createDoctors = async (newDoctors) => {
 
 export const AllDoctors = async () => {
     const res = await fetch(`${baseUrl}/doctors`)
-    
+
     if (!res.ok) {
-      return null;
+        return null;
     }
-    
+
     const data = await res.json()
     return data
 }
@@ -48,7 +48,7 @@ export const getDoctorByEmail = async (email) => {
     const res = await fetch(`${baseUrl}/doctors/${email}`,)
 
     if (!res.ok) {
-      return null;
+        return null;
     }
 
     const data = await res.json();
@@ -85,4 +85,18 @@ export const getDoctorById = async (id) => {
 
     const data = await res.json();
     return data;
-}
+}
+
+
+// appointment doctor 
+export const doctorAllAppointment =async (doctorId) => {
+
+    const res = await fetch(`${baseUrl}/doctor/all-appointment/${doctorId}`);
+
+    if (!res.ok) {
+        return null;
+    }
+
+    const data = await res.json();
+    return data;
+}

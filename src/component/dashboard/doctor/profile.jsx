@@ -28,6 +28,7 @@ export default function ProfessionalCredentialsPage( {userData} ) {
   const [data, setData] = useState({
     ...userData
   });
+  // console.log(data)
 
 
   // Form state
@@ -48,7 +49,7 @@ export default function ProfessionalCredentialsPage( {userData} ) {
       hospital: data?.hospital || '',
       email: user?.email || '',
       gender: user?.gender || '',
-      id: user?.id || '',
+      doctorId: user?.id || '',
       name: user?.name || '',
       image: user?.image || '',
       role: user?.role || '',
@@ -99,17 +100,18 @@ export default function ProfessionalCredentialsPage( {userData} ) {
 
           <Button
             color="primary"
-            variant="solid"
+            variant="secondary"
             startContent={<Edit3 size={16} />}
             onPress={handleOpen}
             className="font-medium"
           >
-            Edit Credentials
+            {!data?.name ? "Create Account" : "Edit Credentials"}
           </Button>
         </div>
 
         {/* ==================== VIEW MODE ==================== */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+        {!data?.name ? <div className='flex justify-center items-center pt-20 text-3xl font-bold'>Please Create You Account</div> : (
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="space-y-1.5">
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -157,6 +159,9 @@ export default function ProfessionalCredentialsPage( {userData} ) {
             </div>
           </div>
         </div>
+        )}
+
+
       </div>
 
       {/* ==================== EDIT MODAL ==================== */}

@@ -99,7 +99,7 @@ export default async function PatientDashboard() {
                 </div>
 
                 {/* List Items */}
-                <div className="space-y-3.5">
+                <div className="flex flex-col space-y-3.5">
                     {dashboardData.consultations.length > 0 ? (
                         dashboardData.consultations.map((item) => (
                             <Link 

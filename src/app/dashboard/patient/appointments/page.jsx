@@ -5,7 +5,7 @@ import React from 'react';
 import { Calendar, Clock, CreditCard, Stethoscope, AlertCircle } from 'lucide-react'; // Tailwind/Lucide icons (optional)
 import AppointmentCard from '@/component/dashboard/patient/AppointmentCard';
 
-const MyAppointmentPage = async () => {
+const patientAppointmentPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     });
@@ -49,4 +49,4 @@ const MyAppointmentPage = async () => {
 // Component to render individual Appointment Card
 
 
-export default MyAppointmentPage;
+export default patientAppointmentPage;

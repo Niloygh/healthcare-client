@@ -20,7 +20,7 @@ export default function DoctorDetails({ doctor }) {
   // console.log(doctor)
 
   const user = authClient.useSession().data?.user;
-  // console.log(user.email)
+  // console.log(user?.name)
 
   const [selectedDay, setSelectedDay] = useState(
     doctor?.date?.[0]?.day || ''
@@ -48,7 +48,8 @@ export default function DoctorDetails({ doctor }) {
     const formData = {
       clientId: user?.id,
       clientEmail: user?.email,
-      doctorId: doctor?._id,
+      clientName: user?.name,
+      doctorId: doctor?.doctorId,
       doctorName: doctor?.name,
       day: selectedDay,
       date: selectedDate,
