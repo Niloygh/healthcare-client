@@ -8,3 +8,11 @@ export const patientDashboard = async (id) => {
     const result = await res.json()
     return result    
 }
+
+
+// doctor dashboard 
+export const doctorDashboard = async (id) => {
+    const res = await fetch(`${baseUrl}/doctor/dashboard/${id}`)
+    const result = await res.json()
+    return result    
+}

@@ -21,6 +21,7 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
   const [isCanceling, setIsCanceling] = useState(false);
 
   const selectedDoctor = addAllDoctors.find((doc) => doc._id === selectedDoctorId);
+  console.log(selectedDoctor)
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
@@ -28,8 +29,8 @@ export default function PractitionerFeedback({ addAllDoctors, user, allReviews }
 
     const newReview = {
       clientId: user?.id,
-      clientEmail: user?.email,
-      doctorId: selectedDoctor?._id,
+      clientName: user?.name,
+      doctorId: selectedDoctor?.doctorId,
       doctorName: `${selectedDoctor?.name}`,
       specialty: selectedDoctor?.specialty,
       rating: rating,

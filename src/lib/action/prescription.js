@@ -20,3 +20,26 @@ export const addPrescriptionData = async (prescriptionData) => {
     const result = await res.json();
     return result;
 }
+
+// all prescription get api
+export const allPrescription = async (doctorId) => {
+    const res = await fetch(`${baseUrl}/doctor/all-prescription/${doctorId}`)
+
+    const result = await res.json()
+    return result
+}
+
+
+// prescription update api 
+export const UpdatePrescription = async(id, UpdateData) =>{
+    const res = await fetch(`${baseUrl}/appointment/prescription/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(UpdateData),
+    })
+
+    const result = await res.json()
+    return result   
+}
