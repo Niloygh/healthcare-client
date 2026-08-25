@@ -46,3 +46,10 @@ export const allAppointment = async () => {
     const data = await res.json();
     return data;
 }
+
+// all payment api 
+export const adminAllPayment = async () => {
+    const res = await fetch(`${baseUrl}/admin/all-payment`, { cache: 'no-store' });
+    const data = await res.json();
+    return data;
+}

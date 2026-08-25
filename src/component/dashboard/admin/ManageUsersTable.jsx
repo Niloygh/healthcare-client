@@ -1,4 +1,4 @@
-'use client'; // Client-side search & state use korar jonno client component e convertible ba server + client split korte paren
+'use client'; 
 
 import React, { useState } from 'react';
 import { Trash2, Search } from 'lucide-react';
