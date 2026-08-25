@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Table } from "@heroui/react";
 import { auth } from "@/lib/auth";

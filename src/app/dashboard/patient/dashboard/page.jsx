@@ -30,7 +30,7 @@ export default async function PatientDashboard() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                            {dashboardData.upcomingClinicsCount}
+                            {dashboardData.upcomingClinicsCount || 0}
                         </h2>
                         <p className="text-xs font-semibold text-gray-400 mt-0.5">
                             Upcoming Clinics
@@ -45,7 +45,7 @@ export default async function PatientDashboard() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                            {dashboardData.historiesCount}
+                            {dashboardData.historiesCount || 0}
                         </h2>
                         <p className="text-xs font-semibold text-gray-400 mt-0.5">
                             Histories & Checkups
@@ -60,7 +60,7 @@ export default async function PatientDashboard() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                            ${dashboardData.totalTransactionsAmount}
+                            ${dashboardData.totalTransactionsAmount || 0}
                         </h2>
                         <p className="text-xs font-semibold text-gray-400 mt-0.5">
                             Total Transactions
@@ -75,7 +75,7 @@ export default async function PatientDashboard() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                            {dashboardData.reviewsCount}
+                            {dashboardData.reviewsCount || 0}
                         </h2>
                         <p className="text-xs font-semibold text-gray-400 mt-0.5">
                             Clinical Reviews
@@ -94,7 +94,7 @@ export default async function PatientDashboard() {
                         Upcoming Consultations
                     </h2>
                     <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-                        {dashboardData.consultations.length} Active
+                        {dashboardData.consultations.length || 0} Active
                     </span>
                 </div>
 

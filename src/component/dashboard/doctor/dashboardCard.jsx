@@ -16,7 +16,7 @@ const DashboardCard = async ({dashboardData}) => {
             </div>
 
             <div>
-              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.totalPatient}</p>
+              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.totalPatient || 0}</p>
               <p className="text-sm text-gray-600 mt-0.5 font-medium">
                 Total Patients
               </p>
@@ -33,7 +33,7 @@ const DashboardCard = async ({dashboardData}) => {
             </div>
 
             <div>
-              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.todayAppointment}</p>
+              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.todayAppointment || 0}</p>
               <p className="text-sm text-gray-600 mt-0.5 font-medium">
                 Today Appointments
               </p>
@@ -51,7 +51,7 @@ const DashboardCard = async ({dashboardData}) => {
 
             <div>
               <p className="text-3xl font-semibold text-gray-900">
-                5 / {dashboardData?.averageRating}
+                5 / {dashboardData?.averageRating || 0}
               </p>
               <p className="text-sm text-gray-600 mt-0.5 font-medium">
                 Clinician Score
@@ -69,7 +69,7 @@ const DashboardCard = async ({dashboardData}) => {
             </div>
 
             <div>
-              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.reviewsCount}</p>
+              <p className="text-3xl font-semibold text-gray-900">{dashboardData?.reviewsCount || 0}</p>
               <p className="text-sm text-gray-600 mt-0.5 font-medium">
                 FEEDBACKS
               </p>
